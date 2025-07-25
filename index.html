@@ -708,12 +708,14 @@
 </footer>
 <script>
     const pages = document.querySelectorAll('.page');
-    window.addEventListener('hashchange', () => {
+    function handleHashChange() {
       const hash = window.location.hash.substring(1) || 'home';
       pages.forEach(p => p.classList.remove('active'));
       const target = document.getElementById(hash);
       if (target) target.classList.add('active');
-    });
+    }
+    document.addEventListener("DOMContentLoaded", handleHashChange);
+    window.addEventListener("hashchange", handleHashChange);
   
 let adminCollapsed = false;
 
