@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notae Latinae</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --primary-green: #2E7D32;
+      --light-green: #A5D6A7;
+      --nav-bg: #388E3C;
+      --accent-red: #D84315;
+      --accent-orange: #FB8C00;
+      --accent-gold: #FBC02D;
+      --bg-light: #fafaf9;
+      --text-main: #212121;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --radius: 10px;
+    }
+    [data-theme="dark"] {
+      --bg-light: #121212;
+      --text-main: #eeeeee;
+      --nav-bg: #1B5E20;
+      --primary-green: #1E4620;
+      --light-green: #66bb6a;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'EB Garamond', serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+    }
+    header, nav, main, footer {
+      margin: auto;
+      padding: 2rem;
+    }
+    header {
+      background-color: var(--primary-green);
+      color: white;
+      text-align: left;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    header h1 a {
+      color: white;
+      text-decoration: none;
+    }
+    nav {
+      background-color: var(--nav-bg);
+      border-radius: var(--radius);
+      text-align: left;
+      box-shadow: var(--shadow);
+    }
+    nav a {
+      margin: 0.5rem;
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: white;
+      background-color: transparent;
+      border-radius: 5px;
+      transition: background 0.2s;
+      font-weight: bold;
+    }
+    nav a:hover {
+      background-color: var(--light-green);
+      color: #1B5E20;
+    }
+    .page {
+      display: none;
+      margin-top: 2rem;
+    }
+    .page.active {
+      display: block;
+    }
+    section h3, section h4, section h5 {
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+    }
+    section h3 {
+      color: var(--accent-red);
+    }
+    section h4 {
+      color: var(--accent-orange);
+    }
+    section h5 {
+      color: var(--accent-gold);
+    }
+    .subheader {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-style: italic;
+    }
+    .content-block {
+      background: white;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    [data-theme="dark"] .content-block {
+      background: #1e1e1e;
+    }
+
+    .dark-mode-toggle {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      padding: 0.5rem 1rem;
+      background: var(--primary-green);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .content-block > *:not(summary) {
+      margin: 0.5rem 0 0 0;
+    }
+    details {
+      margin-top: 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    summary {
+      padding: 1rem;
+      background-color: #f0f0f0;
+      color: black;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+    details[open] summary {
+      background-color: #e0e0e0;
+    }
+    footer {
+      margin-top: 3rem;
+      text-align: left;
+      color: #777;
+      font-size: 0.9rem;
+    }
+    .chart {
+      margin-top: 1rem;
+      text-align: left;
+    }
+    .chart img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+  
+@media (max-width: 768px) {
+  header, nav, main, footer {
+    padding: 1rem;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  nav a {
+    flex: 1 1 45%;
+    font-size: 1rem;
+    padding: 0.75rem;
+    margin: 0.25rem 0;
+    text-align: center;
+  }
+
+  summary {
+    font-size: 1.2rem;
+    padding: 0.75rem;
+  }
+
+  .content-block,
+  details summary {
+    font-size: 1rem;
+  }
+
+  .chart img {
+    width: 100%;
+    height: auto;
+  }
+
+  #login-screen > div {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .dark-mode-toggle {
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    top: 10px;
+    left: 10px;
+  }
+
+  #control-bar {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    right: 10px;
+    top: 60px;
+  }
+
+  #control-bar button {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  #admin-panel {
+    right: 10px;
+    top: 120px;
+    width: 90%;
+    max-width: none;
+  }
+}
+
+</style>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2E7D32">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'));
+    }
+  </script>
+
+</head>
+<body data-theme="light">
+<div id="login-screen" style="position: fixed; inset: 0; background-color: var(--bg-light); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+<div data-theme="light" style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); width: 300px;">
+<h2 style="margin-top: 0; text-align: center;">Notae Latinae</h2>
+<label>Username</label>
+<input id="username" style="width: 100%; margin-bottom: 1rem; padding: 0.5rem;" type="text"/>
+<label>Password</label>
+<input id="password" style="width: 100%; margin-bottom: 1rem; padding: 0.5rem;" type="password"/>
+<button onclick="handleLogin()" style="width: 100%; padding: 0.5rem; background: var(--primary-green); color: white; border: none; border-radius: 5px;">Login</button>
+<p id="login-error" style="color: red; font-size: 0.9rem; text-align: center; margin-top: 1rem; display: none;">Invalid credentials</p>
+<label style="display:block; margin-bottom:1rem;"><input id="remember-me" type="checkbox"/> Remember me</label></div>
+</div>
+
+
+
+<div id="mobile-nav-toggle" style="display:none; padding: 1rem;">
+  <button onclick="toggleMobileNav()" style="background: var(--nav-bg); color: white; border: none; padding: 0.6rem 1rem; border-radius: 5px; font-size: 1.1rem;">☰ Menu</button>
+</div>
+
+<header>
+<h1><a href="#home" style="color: white; text-decoration: none;">Notae Latinae</a></h1>
+<p>Essentials of the Latin Laguage</p>
+<p>First Edition</p>
+</header>
+<nav id="main-nav" style="display:block;">
+<a href="#page1">Nouns</a>
+<a href="#page2">Pronouns</a>
+<a href="#page3">Normal Verbs</a>
+<a href="#page4">Deponent Verbs</a>
+<a href="#page5">Irregular Verbs</a>
+<a href="#page6">Adverbs</a>
+<a href="#page7">Grammar</a>
+<a href="#page8">List of Common Latin Words</a>
+</nav>
+<main><section class="page active" id="home">
+<h2>Note:</h2>
+<p>This was made with some help from generative AI. I have looked through it a lot in order to make sure the information lines up with what we have learned and other sources, but I cannot guarantee everything in here is 100% correct. If anything is wrong with it or I missed something, contact me.</p>
+</section>
+<!-- Subpages -->
+<section class="page" id="page1">
+<h2>Nouns</h2>
+<div class="subheader">Nouns in Latin are the same as nouns in English: a person, place, thing, or idea. Adjectives also take the form of nouns and decline like so as well. Adjectives must match the noun in case, gender, and number. </div>
+<details class="content-block">
+<summary>Noun Endings</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/ydg1Wwzt/Screenshot-2025-07-24-104253.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Nominative</summary>
+<p>Uses: 
+        <p>1. Subject of Sentence: e.g. Caecilius est pater. [Caecilius is the dad.]
+        <p>2. Complete verb to be: e.g. Caecilius est pater. [Caecilius is the dad.]
+        <p>3. Apposition (specify another noun): e.g. Hannibal, dux Carthaginiensis. [Hannibal, the king of the Cartheginians.]
+        <p>4. Exclamation: e.g. O tempora! [Oh the times!]</p>
+</p></p></p></p></details>
+
+<details class="content-block">
+<summary>Genitive</summary>
+<p>Uses: 
+        <p>1. Possession: e.g. Polyspaston Haterii. [Haterius’s crane.]
+        <p>2. Partitive—describing part of something: e.g. Nemo virorum. [None of the men.]
+        <p>3. Description: e.g. Vir magnae virtutis. [A man of great virtue.]
+        <p>(Just generally the word that follows “of”)
+        </p></p></p></p></p></details>
+
+<details class="content-block">
+<summary>Dative</summary>
+<p>Uses: 
+        <p>1. Indirect object: e.g. Magister discipulis librum dat. [The teacher gave the students a book.]
+        <p>2. Purpose: e.g. Auxilio misit. [He sent them as help.]
+        <p>3. Reference: e.g. Haec tibi scribo. [I am writing this for you.]
+        <p>4. Direct object of verbs: parere, placere, favere, nocere, persuadere: 	e.g. Mihi placet. [It pleases me.]
+        <p>5. Subject in passive periphrastic: e.g. Mihi effugiendum est! [I must flee!]
+        </p></p></p></p></p></p></details>
+
+<details class="content-block">
+<summary>Accusative</summary>
+<p>Uses: 
+        <p>1. Direct object: e.g. Ego pecuniam habeo. [I have money.]
+        <p>2. With prepositions ad (to), in (into), per (through), sub (up to): e.g. Grumio per culinam ambulat. [Grumio walks through the kitchen.]
+        </p></p></p></details>
+
+<details class="content-block">
+<summary>Ablative</summary>
+<p>Uses: 
+        <p>1. Prepositions sub (below), in (in), de, sine, pro, a/ab, cum, e/ex; Mnemonic: SID SPACE: e.g. Caecilius est in horto. [Caecilius is in the garden.]
+        <p>2. Ablative of Manner—usually has preposition cum: e.g. Puer in silvis cum amico ambulat. [The boy walks in the woods with a friend.]
+        <p>3. Ablative of Means—answers the question “by which means did ___ happen?”: e.g. Cogidubnus testamentum stilo scripsit. [Cogidubnus wrote his will with his stylus.]
+        <p>4. Ablative of Separation—when you are freed from something: e.g. Clemens servitute liberabatur. [Clemens was freed from slavery.]
+        <p>5. Ablative of Time—expresses time when something occurs: e.g. Nocte dormimus. [We sleep at night.]
+        <p>6. Ablative Absolute—what happens relating to something else (usually noun + participle): e.g. Urbe capta, milites discesserunt. [After the city was captured, the soldiers left.]
+        </p></p></p></p></p></p></p></details>
+
+<details class="content-block">
+<summary>Vocative</summary>
+<p>Uses: 
+        <p>1. Saying someone’s name to their face: e.g. Me Quinte! [My Quintus!]
+        </p></p></details>
+
+<details class="content-block">
+<summary>Adjectives</summary>
+<p>Adjectives decline like nouns, and agree in gender, number, and case—but not necessarily declension or ending.
+        <p>e.g. Salvium scelestum punire. [To punish the wicked Salvius.]
+        </p></p></details>
+
+</section>
+<section class="page" id="page2">
+<h2>Pronouns</h2>
+<div class="subheader">Pronouns in Latin are like pronouns in English, but you have to decline and stuff. They get a separate section because there are a lot of charts. </div>
+<details class="content-block">
+<summary>Personal Pronouns</summary>
+<p>These Refer to Specific People</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/Jnf1XPrn/Screenshot-2025-07-24-104613.png"/>
+<p>Note: 3rd person is just demonstrative pronoun so it is listed below</p>
+</div></details>
+
+<details class="content-block">
+<summary>Demonstrative Pronouns</summary>
+<p>These point things out</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/7PzP489T/Screenshot-2025-07-24-104622.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Hic</summary>
+<p>A type of Demonstrative pronoun that gets special treatment.</p>
+<p>Translation of hic, haec, hoc: this</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/zvTqFKvk/Screenshot-2025-07-24-104627.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Ille</summary>
+<p>Another type of Demonstrative pronoun that gets special treatment.</p>
+<p>Translation of ille, illa, illud: that, he, she</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/QdfhmX8v/Screenshot-2025-07-24-104634.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Reflexive Pronouns</summary>
+<p>These pronouns refer back to the subject “myself, yourself, themselves”</p>
+<p>Singular and plural are the same</p>
+<p>No nominative case</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/Yqfp46Jr/Screenshot-2025-07-24-104642.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Interrogative Pronouns</summary>
+<p>Asks “who” or “what” (no plural).</p>
+<p>Works for both direct and indirect questions</p>
+<p>No plural for the general questions</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/P5Xd1Ljm/Screenshot-2025-07-24-104650.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Relative Pronouns</summary>
+<p>Tells who is doing what.</p>
+<p>Also can be used for purpose clauses</p>
+<p>Matches person, number of noun, but not case (takes case of what it is in the sentence)</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/W4tjfQtz/Screenshot-2025-07-24-104657.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Indefinite Pronouns</summary>
+<p>Refer to unknown things: someone, anyone, each of them.</p>
+<p>There are too many to make charts for, so here is a rule of thumb: It keeps the beginning, but the ending changes like the word the ending is (e.g. gen. sing. of aliquis is “alicuius”)</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/qR3rpysd/Screenshot-2025-07-24-104707.png"/>
+</div></details>
+
+</section>
+<section class="page" id="page3">
+<h2>Normal Verbs</h2>
+<div class="subheader">Normal verbs are just that: the normal verbs we know and love. There is nothing that out of the ordinary about them, and we have learned and been tested on most of this stuff. </div>
+<details class="content-block">
+<summary>Indicative</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/BQg0ZqKt/Screenshot-2025-07-24-104717.png"/>
+<p>*: This is only for 1st/2nd conjugations. 3rd/4th conjugations are: -am, -es, -et, -emus, -etis, -ent</p>
+<p>**: This is only for 1st/2nd conjugations. 3rd/4th conjugations are: -ar, -eris, -etur, -emur, -emini, -entur</p>
+<p>***: PPP means perfect passive participle, the fourth principal part of a verb found in the dictionary</p>
+</div></details>
+
+<details class="content-block">
+<summary>Subjunctive</summary>
+<p>This is when a verb is indirect. Used mainly in ut clauses but also some other times too.</p>
+<p>All the ones that do not have asterisks use the 2nd principal part minus -re, then add the endings</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/brfhrrgS/Screenshot-2025-07-24-104727.png"/>
+<p>*: PPP means perfect passive participle, the fourth principal part of a verb found in the dictionary</p>
+</div></details>
+
+<details class="content-block">
+<summary>Gerundive</summary>
+<p>Gerundives are only passive, and there is only one tense. They are only used in the passive periphrastic.</p>
+<p>They are also known as the Future Passive Participle</p>
+<p>They vary on different conjugations so they are listed by conjugation.</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/PqchG284/Screenshot-2025-07-24-104733.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Infinitive</summary>
+<p>This is the verb in its “to [verb]” form. Varies on conjugation not person or number</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/6qVNvKbj/Screenshot-2025-07-24-104742.png"/>
+<p>*:  PPP means perfect passive participle, the fourth principal part of a verb found in the dictionary</p>
+<p>**: SP means supine I, listed later</p>
+</div></details>
+
+<details class="content-block">
+<summary>Imperative</summary>
+<p>This is a direct order. Varies on conjugation not person or number. Only one tense.</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/wxDzP5xX/Screenshot-2025-07-24-104748.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Gerund</summary>
+<p>A verb that takes the form of a noun. In english we translate it as “the act of [verb]ing”</p>
+<p>If necessary they can decline like nouns</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/vHMyd1Dp/Screenshot-2025-07-24-104754.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Participle</summary>
+<p>These translate to: [verb]ing (present), about to [verb] (future), having been [verb]ed (perfect passive).</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/6ppNyDrc/Screenshot-2025-07-24-104759.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Supine</summary>
+<p>This is something really rare, and it comes in versions I (accusative) and II (ablative)</p>
+<p>Supine I: expresses purpose on verbs expressing motion, comes after the verb, uses the 4th principal part, ends in -um, usually only used with venire, ire, mittere: e.g. Venit spectatum ludos. [He came for the purpose of watching the games.]</p>
+<p>Supine II: specifies adjectives, says what the adjective applies to, also uses the 4th principal part, ends in -u, generally only used if it is really stylized: e.g. Facile dictu, difficile factu. [Easy to say, hard to do.]</p>
+
+</details>
+</section>
+<section class="page" id="page4">
+<h2>Deponent Verbs</h2>
+<div class="subheader">Deponent verbs are a special type of verb that look passive, but they are actually active—which means there is no passive deponent! Sadly there are also semi-deponents so we have to deal with that…</div>
+<details class="content-block">
+<summary>Indicative</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/SRhBq5QW/Screenshot-2025-07-24-104811.png"/>
+<p>*: This is only for 1st/2nd conjugations. 3rd/4th conjugations are: -ar, -eris, -etur, -emur, -emini, -entur
+        <p>**: PPP means perfect passive participle, the fourth principal part of a verb found in the dictionary</p>
+</p></div></details>
+
+<details class="content-block">
+<summary>Subjunctive</summary>
+<p>This is when a verb is indirect. Used mainly in ut clauses but also some other times too.</p>
+<p>All the ones that do not have asterisks use the 2nd principal part minus -re, then add the endings</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/1zghKwYN/Screenshot-2025-07-24-104820.png"/>
+<p>*: PPP means perfect passive participle, the fourth principal part of a verb found in the dictionary</p>
+</div></details>
+
+<details class="content-block">
+<summary>Gerundive</summary>
+<p>Gerundives are only passive, and there is only one tense. They are only used in the passive periphrastic.</p>
+<p>They are also known as the Future Passive Participle</p>
+<p>They vary on different conjugations so they are listed by conjugation.</p>
+<p>These are the only exceptions to the “no passive deponents” rule. These are still passive, but don’t ever refer to people. Sigh</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/cLkGYXTS/Screenshot-2025-07-24-104827.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Infinitive</summary>
+<p>This is the verb in its “to [verb]” form. Varies on conjugation not person or number</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/LsrdQ5rQ/Screenshot-2025-07-24-104837.png"/>
+<p>*:  PPP means perfect passive participle, the fourth principal part of a verb found in the dictionary</p>
+<p>**: SP means supine I, listed later</p>
+</div></details>
+
+<details class="content-block">
+<summary>Imperative</summary>
+<p>This is a direct order. Varies on conjugation not person or number. Only one tense.</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/BbBdvgtR/Screenshot-2025-07-24-104844.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Gerund</summary>
+<p>A verb that takes the form of a noun. In english we translate it as “the act of [verb]ing”</p>
+<p>If necessary they can decline like nouns</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/Hx5qqHmY/Screenshot-2025-07-24-104850.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Participle</summary>
+<p>These translate to: [verb]ing (present), about to [verb] (future), having been [verb]ed (perfect passive).</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/6ppNyDrc/Screenshot-2025-07-24-104759.png"/>
+<p>Deponent Perfect Passive Participles become active, but they look the same. There is no 4th principal part, as you take the 3rd principal part minus sum.</p>
+</div></details>
+
+<details class="content-block">
+<summary>Supine</summary>
+<p>This is something really rare, and it comes in versions I (accusative) and II (ablative)</p>
+<p>Supine I: expresses purpose on verbs expressing motion, comes after the verb, uses the 4th principal part, ends in -um, usually only used with venire, ire, mittere: e.g. Venit spectatum ludos. [He came for the purpose of watching the games.]</p>
+<p>Supine II: never used before in the deponent form</p>
+</details>
+
+</section>
+<section class="page" id="page5">
+<h2>Irregular Verbs</h2>
+<div class="subheader">Like most languages, including English. Latin has a few irregular verbs. They are: sum, possum, volo, nolo, malo, eo. For simplicity we will just do the indicative and infinitive of all the verbs because the rest of the forms are so incredibly rare. They do not have a passive voice, thank goodness. Also infinitives are listed at the top of the chart.</div>
+<details class="content-block">
+<summary>Sum and Possum</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/L8bGhh64/Screenshot-2025-07-24-104904.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Volo and Nolo</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/Cx1WFb06/Screenshot-2025-07-24-104910.png"/>
+<p>Note: also malo, malle, malui is conjugated the exact same way, but it is less common than volo and nolo</p>
+</div></details>
+
+<details class="content-block">
+<summary>Eo</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/m2Vvf8vH/Screenshot-2025-07-24-104915.png"/>
+<p>As you can probably tell, the above three are only irregular in the present tense</p>
+</div></details>
+
+</section>
+<section class="page" id="page6">
+<h2>Adverbs</h2>
+<div class="subheader">Adverbs are just what they are in English: words that describe verbs and other adjectives. However, they don’t all end in -ly, like English. If only it were that simple!</div>
+<details class="content-block">
+<summary>From Adjectives</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/8PT20q0G/Screenshot-2025-07-24-104922.png"/>
+<p>Adverbs from adjectives are the most common, and are considered the “regular” adverbs. They have a set of rules for endings, like everything else in Latin.</p>
+<p>Positive is just the normal form: [adjective]ly, comparative is just that: [adjective]er, and Superlative is like adding “very” or “really” to something: very [adjective]ly</p>
+</div></details>
+
+<details class="content-block">
+<summary>Irregular Adverbs</summary>
+<p>This is exactly what it sounds like. Adverbs that break the rules for some reason. Siiiiiiigh</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/s2GqWyvY/Screenshot-2025-07-24-104930.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>Other Adverbs</summary>
+<p>There are also adverbs that instead of talking about how something is done, it talks about some other manner something is done. Thank goodness there are no superlatives and stuff this time.</p>
+<p>The ones that are above are adverbs of manner, and are also listed here.</p>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/76vcMc2p/Screenshot-2025-07-24-104936.png"/>
+<p>Some of these so-called “adverbs” aren’t even adverbs in English!</p>
+</div></details>
+
+</section>
+<section class="page" id="page7">
+<h2>Grammar</h2>
+<div class="subheader">These are things that people get confused about easily, or just some helpful things that I hope you won’t forget. Good luck with some of this stuff.</div>
+<details class="content-block">
+<summary>Dictionary Entry</summary>
+<p>A dictionary entry is what a noun or verb looks like in a dictionary. If you are using the digital version of the book, click here for the link to an online dictionary. Otherwise you can use the short one at the end of this book.</p>
+<p>Nouns: the dictionary entry has the nominative singular, the genitive singular, then the gender, and then finally the definition. Using the genitive singular, you can find all endings by removing the genitive ending and replacing it with the ending you want: e.g. ludus, ludi, m. — game</p>
+<p>Verbs: the dictionary entry has the first person singular present active indicative, followed by the present active infinitive, followed by the first person singular perfect active indicative, followed by the perfect passive participle (if the verb you are looking for has a PPP), and then finally the definition of the infinitive without the “to.” Once again, you can remove the endings and find all the different forms of the verbs by using the stems: e.g. amo, amare, amavi, amatus — love</p>
+<p>Adjectives: the dictionary entry has the masculine nominative singular, followed by feminine, followed by neuter, then the definition: e.g. laetus, -a, -um — happy</p>
+<p>Adverbs: the dictionary entry has just the word because adverbs do not decline: e.g. celeriter — quickly</p>
+<p>Prepositions: the dictionary entry has the word, plus the case the word it affects takes: e.g in (+ abl.) — in</p>
+<p>Other Words: the dictionary entry has just the word and definition: e.g. et — and</p>
+</details>
+
+<details class="content-block">
+<summary>Purpose Clauses</summary>
+<p>These clauses express purpose. Duh. but also they are used as an indirect clause with ut or ne, which means that the following verb takes the subjunctive. These clauses tell you that something happens, followed by why something happens.</p>
+<p>Ut is used when the expression is positive and ne is used when it is negative: e.g. Legi ut discam. [I read so that I might learn.]; e.g. Feci ne errarent. [I did it so that they would not make a mistake.]</p>
+<p>You can tell if it is a purpose clause if it has ne.</p>
+</details>
+
+<details class="content-block">
+<summary>Result Clauses</summary>
+<p>These clauses express result, also in an indirect way with ut—but not ne. If it is negative, then we use ut non instead. However, if both clauses are negative (shown in the third example) then we use quin instead of either of them! Again, because it is indirect, it is in the subjunctive.</p>
+<p>It also usually has the signal words: tam, ita, tantus, talis, adeo: e.g Tam fessus erat ut dormiret. [He was so tired that he slept.]; e.g. Tam fessus erat ut ambulāre nōn posset. [He was so tired that he could not walk.]; e.g. Nihil tam difficile est quin strenue laborando disci possit. [Nothing is so difficult that it cannot be learned with hard work.]
+        </p></details>
+
+<details class="content-block">
+<summary>Indirect Commands</summary>
+<p>This is like an imperative but you are saying that someone else said that. This is great for putting the blame on someone else. Once again in the subjunctive. Once again uses ut or ut non. But now it uses some sort of command verb at the start such as orare, rogare, or imperare: e.g. Legatus militibus imperavit ut redirent. [The commander ordered the soldiers to go back.]</p>
+</details>
+
+<details class="content-block">
+<summary>Indirect Questions</summary>
+<p>These are really similar to indirect commands; both have the subjunctive, and both use verbs like rogare and other words. But indirect commands have something different: question words. These words, like quis, quid, ubi, cur, quomodo, quantus, quando, quot, and utrum, take the place of ut or ne and are the defining difference between indirect commands and questions: e.g. Quaerit quis veniat. [He asks who is coming.]</p>
+</details>
+
+<details class="content-block">
+<summary>Passive Periphrastic</summary>
+<p>These are far too common, and honestly are a lot less scary than they sound and look like. This grammar construct expresses necessity, and unlike most things in Latin, it’s rather simple: a dative noun, followed by the only use for a gerundive, followed by the verb “est.” The proper translation would technically be “It must be [verb]ed by [noun],” but we usually translate it as “[noun] must [verb],” which just sounds better in English: e.g. Mihi effugiendum est! [I must flee!]; e.g. Tibi neciendum est! [You must die!]</p>
+<p>This is a great example of a grammar construct in Latin that has thankfully faded out of use in favor of a more simple phrasing. There are also other ways of expressing necessity in Latin, but those are far less common.</p>
+</details>
+
+<details class="content-block">
+<summary>Ablative Absolutes</summary>
+<p>These are hands down one of the hardest things Latin throws at you. Right when you think you have the sentence translated perfectly, you run into one of these. At least this time they didn’t name it something fancy. It is just an ablative noun and participle, absolute by itself in a sentence. It is used to express something happening at a time relative to another. The way you build an ablative absolute is simple: noun, then participle, both in ablative case. But wait! Sometimes, instead of a participle, you need another noun, or an adjective. But pretty much, if you see a couple ablatives next to each other, and they are separated from the rest of the sentence with a comma, then you probably just met an ablative absolute: e.g. Urbe capta, milites discesserunt [With the city having been captured, the soldiers left.]; e.g. Caesare duce, exercitus Romanus contra Gallos pugnavit. [While Caesar was the leader, the Roman army fought against the Gauls.]</p>
+</details>
+
+<details class="content-block">
+<summary>Rules of Gender</summary>
+<p>The rules of Gender are pretty simple: 1st declension nouns can only be feminine, 2nd declension can be masculine or neuter, 3rd declension can be all three, but 4th declension can be m. or n., and 5th declension is almost always feminine, but there are some masculine nouns. You can tell if something is neuter based on the dictionary definition, or by seeing a nominative or accusative in the text.</p>
+<p>Neuter Rule: the nominative and accusative are always the same, and in the plural they end in -a.</p>
+</details>
+
+</section>
+<section class="page" id="page8">
+<h2>List of Common Latin Words</h2>
+<div class="subheader">Below is a list of common Latin words and their translation into English</div>
+<details class="content-block">
+<summary>50 Common Nouns</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/jqcmnsDL/Screenshot-2025-07-24-171934.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>50 Common Verbs</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/bw7BfrBF/Screenshot-2025-07-24-171947.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>20 Common Adjectives</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/PrF7K2zH/Screenshot-2025-07-24-171955.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>20 Common Adverbs</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/7YLcgpzX/Screenshot-2025-07-24-172003.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>30 Common Prepositions</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/YCGsPYbW/Screenshot-2025-07-24-172012.png"/>
+</div></details>
+
+<details class="content-block">
+<summary>20 Common Other Words</summary>
+<div class="chart">
+<img alt="Latin Noun Declension Chart" src="https://i.postimg.cc/VNXHf1ys/Screenshot-2025-07-24-172020.png"/>
+</div></details>
+
+</section>
+</main>
+<footer>
+<p>© 2025 Riley Boynton. All rights reserved.</p>
+</footer>
+<script>
+    const pages = document.querySelectorAll('.page');
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.substring(1) || 'home';
+      pages.forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(hash);
+      if (target) target.classList.add('active');
+    });
+  
+let adminCollapsed = false;
+
+function toggleAdminPanel() {
+  const panel = document.getElementById("admin-panel");
+  if (!panel) return;
+  adminCollapsed = !adminCollapsed;
+  const userList = document.getElementById("user-list");
+  const buttons = panel.querySelectorAll("button:not([onclick*='toggleAdminPanel'])");
+  const toggleBtn = panel.querySelector("button[onclick='toggleAdminPanel()']");
+
+  userList.style.display = adminCollapsed ? "none" : "block";
+  buttons.forEach(btn => btn.style.display = adminCollapsed ? "none" : "inline-block");
+  toggleBtn.textContent = adminCollapsed ? "⬇️" : "⬆️";
+}
+
+</script>
+<script>
+      function toggleDarkMode() {
+        const currentTheme = document.body.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        document.body.setAttribute("data-theme", newTheme);
+    }
+    </script>
+
+
+<div id="admin-panel" style="display:none; position:fixed; top:10px; right:180px; background:#fff; padding:1rem; box-shadow:0 0 10px rgba(0,0,0,0.2); border-radius:8px; max-width:250px; z-index:9998;">
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <h3 style="margin: 0;">Admin Panel</h3>
+  <button onclick="toggleAdminPanel()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">⬆️</button>
+</div>
+
+<ul id="user-list" style="padding-left:1rem;"></ul>
+<button onclick="addUser()">Add User</button>
+<button onclick="removeUser()">Remove User</button>
+<script>updateUserList();</script>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+  if (!localStorage.getItem("latin_users")) {
+    localStorage.setItem("latin_users", JSON.stringify({
+      "rboynton": "123456",
+      "student1": "latin123",
+      "student2": "romanisunt"
+    }));
+  }
+
+  let USERS = JSON.parse(localStorage.getItem("latin_users"));
+
+  function saveUsers() {
+    localStorage.setItem("latin_users", JSON.stringify(USERS));
+  }
+
+  function toggleDarkMode() {
+    const currentTheme = document.body.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    document.body.setAttribute("data-theme", newTheme);
+  }
+
+  function handleLogin() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    const error = document.getElementById("login-error");
+    const remember = document.getElementById("remember-me").checked;
+
+    if (USERS[user] && USERS[user] === pass) {
+      if (remember) {
+        localStorage.setItem("latin_logged_in", user);
+      } else {
+        sessionStorage.setItem("latin_logged_in", user);
+      }
+      document.getElementById("login-screen").style.display = "none";
+      document.body.style.overflow = "auto";
+      document.getElementById("control-bar").style.display = "flex";
+
+      if (user === "rboynton") {
+        document.getElementById("admin-panel").style.display = "block";
+        updateUserList();
+      }
+    } else {
+      error.style.display = "block";
+    }
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("latin_logged_in");
+    sessionStorage.removeItem("latin_logged_in");
+    location.reload();
+  }
+
+  function checkLogin() {
+    let user = localStorage.getItem("latin_logged_in") || sessionStorage.getItem("latin_logged_in");
+    if (user && USERS[user]) {
+      document.getElementById("login-screen").style.display = "none";
+      document.body.style.overflow = "auto";
+      document.getElementById("control-bar").style.display = "flex";
+      if (user === "rboynton") {
+        document.getElementById("admin-panel").style.display = "block";
+        updateUserList();
+      }
+    }
+  }
+
+  function addUser() {
+    const newUser = prompt("Enter new username:");
+    if (!newUser || USERS[newUser]) {
+      alert("Invalid or existing user.");
+      return;
+    }
+    const newPass = prompt("Enter password for " + newUser + ":");
+    if (!newPass) return;
+    USERS[newUser] = newPass;
+    saveUsers();
+    updateUserList();
+  }
+
+  function removeUser() {
+    const userToRemove = prompt("Enter username to remove:");
+    if (userToRemove === "rboynton") {
+      alert("Cannot remove admin.");
+      return;
+    }
+    if (USERS[userToRemove]) {
+      delete USERS[userToRemove];
+      saveUsers();
+      updateUserList();
+    } else {
+      alert("User not found.");
+    }
+  }
+
+  function updateUserList() {
+    const list = document.getElementById("user-list");
+    if (!list) return;
+    list.innerHTML = "";
+    Object.keys(USERS).forEach(user => {
+      const li = document.createElement("li");
+      li.textContent = user;
+      list.appendChild(li);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", checkLogin);
+</script>
+
+<div id="control-bar" style="position:fixed; top:10px; right:10px; z-index:9999; display:flex; gap:0.5rem; background:white; padding:0.5rem 1rem; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+<button onclick="toggleDarkMode()" style="padding:0.5rem 1rem; background:var(--primary-green); color:white; border:none; border-radius:5px;">🌙</button>
+<button onclick="handleLogout()" style="padding:0.5rem 1rem; background:var(--nav-bg); color:white; border:none; border-radius:5px;">Logout</button>
+</div>
+
+<script>
+  function toggleMobileNav() {
+    const nav = document.getElementById('main-nav');
+    nav.style.display = nav.style.display === 'none' ? 'block' : 'none';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.innerWidth < 768) {
+      document.getElementById('main-nav').style.display = 'none';
+      document.getElementById('mobile-nav-toggle').style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>
