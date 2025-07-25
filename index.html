@@ -771,17 +771,19 @@ function toggleAdminPanel() {
 <script>
 let USERS = {
   "rboynton": "123456",
-  "guest1": "123456",
-  "rboyntonalt": "123456"
+  "student1": "latin123",
+  "student2": "romanisunt"
 };
 
-// Try loading from localStorage, fallback to default
 try {
   const stored = JSON.parse(localStorage.getItem("latin_users"));
-  if (stored) USERS = stored;
-  else localStorage.setItem("latin_users", JSON.stringify(USERS));
+  if (stored && typeof stored === "object") {
+    USERS = stored;
+  } else {
+    localStorage.setItem("latin_users", JSON.stringify(USERS));
+  }
 } catch (e) {
-  console.warn("Using default users due to storage error:", e);
+  console.warn("Storage access failed. Using default users.");
 }
 
   function saveUsers() {
