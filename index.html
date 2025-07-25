@@ -1,11 +1,9 @@
 
+
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
-<link rel="manifest" href="/manifest.json" />
-<link rel="icon" href="/icons/icon-192.png" sizes="192x192" />
-<meta name="theme-color" content="#5A3E36" />
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Notae Latinae</title>
@@ -255,11 +253,6 @@
 <label style="display:block; margin-bottom:1rem;"><input id="remember-me" type="checkbox"/> Remember me</label></div>
 </div>
 
-
-
-<div id="mobile-nav-toggle" style="display:none; padding: 1rem;">
-  <button onclick="toggleMobileNav()" style="background: var(--nav-bg); color: white; border: none; padding: 0.6rem 1rem; border-radius: 5px; font-size: 1.1rem;">☰ Menu</button>
-</div>
 
 
 <div id="mobile-nav-toggle" style="display:none; padding: 1rem;">
@@ -716,14 +709,12 @@
 </footer>
 <script>
     const pages = document.querySelectorAll('.page');
-    function handleHashChange() {
+    window.addEventListener('hashchange', () => {
       const hash = window.location.hash.substring(1) || 'home';
       pages.forEach(p => p.classList.remove('active'));
       const target = document.getElementById(hash);
       if (target) target.classList.add('active');
-    }
-    document.addEventListener("DOMContentLoaded", handleHashChange);
-    window.addEventListener("hashchange", handleHashChange);
+    });
   
 let adminCollapsed = false;
 
@@ -772,22 +763,15 @@ function toggleAdminPanel() {
 
 
 <script>
-let USERS = {
-  "rboynton": "123456",
-  "guest1": "123456",
-  "rboyntonalt": "123456"
-};
-
-try {
-  const stored = JSON.parse(localStorage.getItem("latin_users"));
-  if (stored && typeof stored === "object") {
-    USERS = stored;
-  } else {
-    localStorage.setItem("latin_users", JSON.stringify(USERS));
+  if (!localStorage.getItem("latin_users")) {
+    localStorage.setItem("latin_users", JSON.stringify({
+      "rboynton": "123456",
+      "student1": "latin123",
+      "student2": "romanisunt"
+    }));
   }
-} catch (e) {
-  console.warn("Storage access failed. Using default users.");
-}
+
+  let USERS = JSON.parse(localStorage.getItem("latin_users"));
 
   function saveUsers() {
     localStorage.setItem("latin_users", JSON.stringify(USERS));
@@ -900,29 +884,6 @@ try {
     if (window.innerWidth < 768) {
       document.getElementById('main-nav').style.display = 'none';
       document.getElementById('mobile-nav-toggle').style.display = 'block';
-    }
-  });
-</script>
-
-
-<script>
-  function toggleMobileNav() {
-    const nav = document.getElementById('main-nav');
-    if (nav.style.display === 'none' || nav.style.display === '') {
-      nav.style.display = 'block';
-    } else {
-      nav.style.display = 'none';
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.innerWidth < 768) {
-      const nav = document.getElementById('main-nav');
-      const toggle = document.getElementById('mobile-nav-toggle');
-      if (nav && toggle) {
-        nav.style.display = 'none';
-        toggle.style.display = 'block';
-      }
     }
   });
 </script>
