@@ -1,16 +1,13 @@
-
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2E7D32">
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Notae Latinae</title>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&amp;display=swap" rel="stylesheet"/>
-<style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#2E7D32"/>
+  <title>Notae Latinae</title>
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
     :root {
       --primary-green: #2E7D32;
       --light-green: #A5D6A7;
@@ -18,11 +15,12 @@
       --accent-red: #D84315;
       --accent-orange: #FB8C00;
       --accent-gold: #FBC02D;
-      --bg-light: #fafaf9;
+      --bg-light: #f0f4f8;
       --text-main: #212121;
-      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      --radius: 10px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --radius: 16px;
     }
+
     [data-theme="dark"] {
       --bg-light: #121212;
       --text-main: #eeeeee;
@@ -30,37 +28,50 @@
       --primary-green: #1E4620;
       --light-green: #66bb6a;
     }
+
     * {
       box-sizing: border-box;
+      transition: all 0.3s ease;
     }
+
     body {
-      font-family: 'EB Garamond', serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
       background-color: var(--bg-light);
       color: var(--text-main);
     }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    [data-theme="dark"] .glass {
+      background: rgba(30, 30, 30, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     header, nav, main, footer {
       margin: auto;
       padding: 2rem;
+      max-width: 960px;
     }
+
     header {
-      background-color: var(--primary-green);
       color: white;
       text-align: left;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
     }
+
     header h1 a {
       color: white;
       text-decoration: none;
     }
-    nav {
-      background-color: var(--nav-bg);
-      border-radius: var(--radius);
-      text-align: left;
-      box-shadow: var(--shadow);
-    }
+
     nav a {
       margin: 0.5rem;
       display: inline-block;
@@ -68,49 +79,33 @@
       text-decoration: none;
       color: white;
       background-color: transparent;
-      border-radius: 5px;
-      transition: background 0.2s;
-      font-weight: bold;
+      border-radius: 8px;
+      font-weight: 600;
     }
+
     nav a:hover {
       background-color: var(--light-green);
       color: #1B5E20;
     }
+
     .page {
       display: none;
       margin-top: 2rem;
     }
+
     .page.active {
       display: block;
     }
-    section h3, section h4, section h5 {
-      margin-top: 1.5rem;
-      font-size: 1.25rem;
-    }
+
     section h3 {
       color: var(--accent-red);
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
     }
-    section h4 {
-      color: var(--accent-orange);
-    }
-    section h5 {
-      color: var(--accent-gold);
-    }
-    .subheader {
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-      color: #555;
-      font-style: italic;
-    }
+
     .content-block {
-      background: white;
       padding: 1rem;
       margin-top: 1rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    [data-theme="dark"] .content-block {
-      background: #1e1e1e;
     }
 
     .dark-mode-toggle {
@@ -121,145 +116,95 @@
       background: var(--primary-green);
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
+      z-index: 10000;
     }
-    .content-block > *:not(summary) {
-      margin: 0.5rem 0 0 0;
-    }
-    details {
-      margin-top: 1rem;
-      border-radius: var(--radius);
+
+    button, input {
+      border-radius: 12px;
+      border: none;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      color: var(--text-main);
       box-shadow: var(--shadow);
-      overflow: hidden;
+      width: 100%;
+      margin-bottom: 1rem;
     }
-    summary {
-      padding: 1rem;
-      background-color: #f0f0f0;
-      color: black;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1.5rem;
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.3);
     }
-    details[open] summary {
-      background-color: #e0e0e0;
-    }
+
     footer {
       margin-top: 3rem;
       text-align: left;
       color: #777;
       font-size: 0.9rem;
     }
-    .chart {
-      margin-top: 1rem;
-      text-align: left;
+
+    @media (max-width: 768px) {
+      header, nav, main, footer {
+        padding: 1rem;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+
+      nav a {
+        flex: 1 1 45%;
+        font-size: 1rem;
+        padding: 0.75rem;
+        margin: 0.25rem 0;
+        text-align: center;
+      }
     }
-    .chart img {
-      max-width: 100%;
-      height: auto;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-  
-@media (max-width: 768px) {
-  header, nav, main, footer {
-    padding: 1rem;
-  }
-
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-  }
-
-  nav a {
-    flex: 1 1 45%;
-    font-size: 1rem;
-    padding: 0.75rem;
-    margin: 0.25rem 0;
-    text-align: center;
-  }
-
-  summary {
-    font-size: 1.2rem;
-    padding: 0.75rem;
-  }
-
-  .content-block,
-  details summary {
-    font-size: 1rem;
-  }
-
-  .chart img {
-    width: 100%;
-    height: auto;
-  }
-
-  #login-screen > div {
-    width: 90%;
-    padding: 1rem;
-  }
-
-  .dark-mode-toggle {
-    padding: 0.4rem 0.8rem;
-    font-size: 1rem;
-    top: 10px;
-    left: 10px;
-  }
-
-  #control-bar {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.3rem;
-    padding: 0.5rem;
-    right: 10px;
-    top: 60px;
-  }
-
-  #control-bar button {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.9rem;
-  }
-
-  #admin-panel {
-    right: 10px;
-    top: 120px;
-    width: 90%;
-    max-width: none;
-  }
-}
-
-</style>
-
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2E7D32">
+  </style>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log('Service Worker Registered'));
     }
-  </script>
 
+    function handleLogin() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const error = document.getElementById("login-error");
+      if (username === "admin" && password === "1234") {
+        document.getElementById("login-screen").style.display = "none";
+      } else {
+        error.style.display = "block";
+      }
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute("data-theme");
+      body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+    }
+  </script>
 </head>
 <body data-theme="light">
-<div id="login-screen" style="position: fixed; inset: 0; background-color: var(--bg-light); display: flex; justify-content: center; align-items: center; z-index: 9999;">
-<div data-theme="light" style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); width: 300px;">
-<h2 style="margin-top: 0; text-align: center;">Notae Latinae</h2>
-<label>Username</label>
-<input id="username" style="width: 100%; margin-bottom: 1rem; padding: 0.5rem;" type="text"/>
-<label>Password</label>
-<input id="password" style="width: 100%; margin-bottom: 1rem; padding: 0.5rem;" type="password"/>
-<button onclick="handleLogin()" style="width: 100%; padding: 0.5rem; background: var(--primary-green); color: white; border: none; border-radius: 5px;">Login</button>
-<p id="login-error" style="color: red; font-size: 0.9rem; text-align: center; margin-top: 1rem; display: none;">Invalid credentials</p>
-<label style="display:block; margin-bottom:1rem;"><input id="remember-me" type="checkbox"/> Remember me</label></div>
-</div>
+  <button class="dark-mode-toggle" onclick="toggleTheme()">🌓</button>
 
-
-
-<div id="mobile-nav-toggle" style="display:none; padding: 1rem;">
-  <button onclick="toggleMobileNav()" style="background: var(--nav-bg); color: white; border: none; padding: 0.6rem 1rem; border-radius: 5px; font-size: 1.1rem;">☰ Menu</button>
-</div>
+  <div id="login-screen" style="position: fixed; inset: 0; background-color: var(--bg-light); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+    <div class="glass" style="padding: 2rem; width: 300px;">
+      <h2 style="text-align: center;">Notae Latinae</h2>
+      <label>Username</label>
+      <input id="username" type="text"/>
+      <label>Password</label>
+      <input id="password" type="password"/>
+      <button onclick="handleLogin()">Login</button>
+      <p id="login-error" style="color: red; font-size: 0.9rem; text-align: center; display: none;">Invalid credentials</p>
+      <label><input id="remember-me" type="checkbox"/> Remember me</label>
+    </div>
+  </div></div>
 
 <header>
 <h1><a href="#home" style="color: white; text-decoration: none;">Notae Latinae</a></h1>
