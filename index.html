@@ -1,13 +1,13 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#2E7D32"/>
-  <title>Notae Latinae</title>
-  <link rel="manifest" href="manifest.json">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notae Latinae</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&amp;display=swap" rel="stylesheet"/>
+<style>
     :root {
       --primary-green: #2E7D32;
       --light-green: #A5D6A7;
@@ -15,12 +15,11 @@
       --accent-red: #D84315;
       --accent-orange: #FB8C00;
       --accent-gold: #FBC02D;
-      --bg-light: #f0f4f8;
+      --bg-light: #fafaf9;
       --text-main: #212121;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      --radius: 16px;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --radius: 10px;
     }
-
     [data-theme="dark"] {
       --bg-light: #121212;
       --text-main: #eeeeee;
@@ -28,50 +27,37 @@
       --primary-green: #1E4620;
       --light-green: #66bb6a;
     }
-
     * {
       box-sizing: border-box;
-      transition: all 0.3s ease;
     }
-
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'EB Garamond', serif;
       margin: 0;
       padding: 0;
       background-color: var(--bg-light);
       color: var(--text-main);
     }
-
-    .glass {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    [data-theme="dark"] .glass {
-      background: rgba(30, 30, 30, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
     header, nav, main, footer {
       margin: auto;
       padding: 2rem;
-      max-width: 960px;
     }
-
     header {
+      background-color: var(--primary-green);
       color: white;
       text-align: left;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
-
     header h1 a {
       color: white;
       text-decoration: none;
     }
-
+    nav {
+      background-color: var(--nav-bg);
+      border-radius: var(--radius);
+      text-align: left;
+      box-shadow: var(--shadow);
+    }
     nav a {
       margin: 0.5rem;
       display: inline-block;
@@ -79,33 +65,49 @@
       text-decoration: none;
       color: white;
       background-color: transparent;
-      border-radius: 8px;
-      font-weight: 600;
+      border-radius: 5px;
+      transition: background 0.2s;
+      font-weight: bold;
     }
-
     nav a:hover {
       background-color: var(--light-green);
       color: #1B5E20;
     }
-
     .page {
       display: none;
       margin-top: 2rem;
     }
-
     .page.active {
       display: block;
     }
-
+    section h3, section h4, section h5 {
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+    }
     section h3 {
       color: var(--accent-red);
-      font-size: 1.25rem;
-      margin-top: 1.5rem;
     }
-
+    section h4 {
+      color: var(--accent-orange);
+    }
+    section h5 {
+      color: var(--accent-gold);
+    }
+    .subheader {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-style: italic;
+    }
     .content-block {
+      background: white;
       padding: 1rem;
       margin-top: 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    [data-theme="dark"] .content-block {
+      background: #1e1e1e;
     }
 
     .dark-mode-toggle {
@@ -116,102 +118,67 @@
       background: var(--primary-green);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
-      z-index: 10000;
     }
-
-    button, input {
-      border-radius: 12px;
-      border: none;
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      color: var(--text-main);
+    .content-block > *:not(summary) {
+      margin: 0.5rem 0 0 0;
+    }
+    details {
+      margin-top: 1rem;
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
-      width: 100%;
-      margin-bottom: 1rem;
+      overflow: hidden;
     }
-
-    button:hover {
-      background: rgba(255, 255, 255, 0.3);
+    summary {
+      padding: 1rem;
+      background-color: #f0f0f0;
+      color: black;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.5rem;
     }
-
+    details[open] summary {
+      background-color: #e0e0e0;
+    }
     footer {
       margin-top: 3rem;
       text-align: left;
       color: #777;
       font-size: 0.9rem;
     }
-
-    @media (max-width: 768px) {
-      header, nav, main, footer {
-        padding: 1rem;
-      }
-
-      nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-      }
-
-      nav a {
-        flex: 1 1 45%;
-        font-size: 1rem;
-        padding: 0.75rem;
-        margin: 0.25rem 0;
-        text-align: center;
-      }
+    .chart {
+      margin-top: 1rem;
+      text-align: left;
+    }
+    .chart img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
   </style>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('Service Worker Registered'));
-    }
-
-    function handleLogin() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      const error = document.getElementById("login-error");
-      if (username === "admin" && password === "1234") {
-        document.getElementById("login-screen").style.display = "none";
-      } else {
-        error.style.display = "block";
-      }
-    }
-
-    function toggleTheme() {
-      const body = document.body;
-      const current = body.getAttribute("data-theme");
-      body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
-    }
-  </script>
 </head>
 <body data-theme="light">
-  <button class="dark-mode-toggle" onclick="toggleTheme()">🌓</button>
+<div id="login-screen" style="position: fixed; inset: 0; background-color: var(--bg-light); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+<div data-theme="light" style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); width: 300px;">
+<h2 style="margin-top: 0; text-align: center;">Login</h2>
+<label>Username</label>
+<input id="username" style="width: 100%; margin-bottom: 1rem; padding: 0.5rem;" type="text"/>
+<label>Password</label>
+<input id="password" style="width: 100%; margin-bottom: 1rem; padding: 0.5rem;" type="password"/>
+<button onclick="handleLogin()" style="width: 100%; padding: 0.5rem; background: var(--primary-green); color: white; border: none; border-radius: 5px;">Login</button>
+<p id="login-error" style="color: red; font-size: 0.9rem; text-align: center; margin-top: 1rem; display: none;">Invalid credentials</p>
+<label style="display:block; margin-bottom:1rem;"><input id="remember-me" type="checkbox"/> Remember me</label><button onclick="handleLogout()" style="margin-top:1rem; background:#ccc; color:black; padding:0.3rem 0.5rem; border-radius:5px; border:none;">Logout</button></div>
+</div>
 
-  <div id="login-screen" style="position: fixed; inset: 0; background-color: var(--bg-light); display: flex; justify-content: center; align-items: center; z-index: 9999;">
-    <div class="glass" style="padding: 2rem; width: 300px;">
-      <h2 style="text-align: center;">Notae Latinae</h2>
-      <label>Username</label>
-      <input id="username" type="text"/>
-      <label>Password</label>
-      <input id="password" type="password"/>
-      <button onclick="handleLogin()">Login</button>
-      <p id="login-error" style="color: red; font-size: 0.9rem; text-align: center; display: none;">Invalid credentials</p>
-      <label><input id="remember-me" type="checkbox"/> Remember me</label>
-    </div>
-  </div></div>
 
 <header>
 <h1><a href="#home" style="color: white; text-decoration: none;">Notae Latinae</a></h1>
 <p>Essentials of the Latin Laguage</p>
 <p>First Edition</p>
 </header>
-<nav id="main-nav" style="display:block;">
+<nav>
 <a href="#page1">Nouns</a>
 <a href="#page2">Pronouns</a>
 <a href="#page3">Normal Verbs</a>
@@ -654,8 +621,7 @@
 <footer>
 <p>© 2025 Riley Boynton. All rights reserved.</p>
 </footer>
-<script>
-    const pages = document.querySelectorAll('.page');
+<script>const pages = document.querySelectorAll('.page');
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.substring(1) || 'home';
       pages.forEach(p => p.classList.remove('active'));
@@ -663,19 +629,10 @@
       if (target) target.classList.add('active');
     });
   
-let adminCollapsed = false;
-
 function toggleAdminPanel() {
   const panel = document.getElementById("admin-panel");
   if (!panel) return;
-  adminCollapsed = !adminCollapsed;
-  const userList = document.getElementById("user-list");
-  const buttons = panel.querySelectorAll("button:not([onclick*='toggleAdminPanel'])");
-  const toggleBtn = panel.querySelector("button[onclick='toggleAdminPanel()']");
-
-  userList.style.display = adminCollapsed ? "none" : "block";
-  buttons.forEach(btn => btn.style.display = adminCollapsed ? "none" : "inline-block");
-  toggleBtn.textContent = adminCollapsed ? "⬇️" : "⬆️";
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
 }
 
 </script>
@@ -689,15 +646,12 @@ function toggleAdminPanel() {
 
 
 <div id="admin-panel" style="display:none; position:fixed; top:10px; right:180px; background:#fff; padding:1rem; box-shadow:0 0 10px rgba(0,0,0,0.2); border-radius:8px; max-width:250px; z-index:9998;">
-
-<div style="display: flex; justify-content: space-between; align-items: center;">
-  <h3 style="margin: 0;">Admin Panel</h3>
-  <button onclick="toggleAdminPanel()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">⬆️</button>
-</div>
-
+<h3 style="margin-top:0;">Admin Panel</h3>
 <ul id="user-list" style="padding-left:1rem;"></ul>
+<div id="admin-actions" style="display:none;">
 <button onclick="addUser()">Add User</button>
 <button onclick="removeUser()">Remove User</button>
+</div>
 <script>updateUserList();</script>
 </div>
 
@@ -710,15 +664,19 @@ function toggleAdminPanel() {
 
 
 <script>
+  
+  // Ensure latin_users exists in localStorage
   if (!localStorage.getItem("latin_users")) {
     localStorage.setItem("latin_users", JSON.stringify({
       "rboynton": "123456",
-      "guest1": "123456",
-      "rboyntonalt": "123456"
+      "student1": "latin123",
+      "student2": "romanisunt"
     }));
   }
 
   let USERS = JSON.parse(localStorage.getItem("latin_users"));
+  console.log("Loaded USERS:", USERS);
+
 
   function saveUsers() {
     localStorage.setItem("latin_users", JSON.stringify(USERS));
@@ -730,6 +688,7 @@ function toggleAdminPanel() {
     document.body.setAttribute("data-theme", newTheme);
   }
 
+  
   function handleLogin() {
     const user = document.getElementById("username").value.trim();
     const pass = document.getElementById("password").value.trim();
@@ -747,10 +706,22 @@ function toggleAdminPanel() {
       document.getElementById("control-bar").style.display = "flex";
 
       if (user === "rboynton") {
-        document.getElementById("admin-panel").style.display = "block";
+        const toggleBtn = document.getElementById("admin-toggle-btn");
+        if (toggleBtn) toggleBtn.style.display = "inline-block";
+
+        const adminPanel = document.getElementById("admin-panel");
+        if (adminPanel) adminPanel.style.display = "none"; // hidden by default, shown when toggled
+
+        const adminActions = document.getElementById("admin-actions");
+        if (adminActions) adminActions.style.display = "block";
+
         updateUserList();
       }
     } else {
+      error.style.display = "block";
+    }
+  }
+ else {
       error.style.display = "block";
     }
   }
@@ -761,10 +732,30 @@ function toggleAdminPanel() {
     location.reload();
   }
 
+  
   function checkLogin() {
     let user = localStorage.getItem("latin_logged_in") || sessionStorage.getItem("latin_logged_in");
     if (user && USERS[user]) {
       document.getElementById("login-screen").style.display = "none";
+      document.body.style.overflow = "auto";
+      document.getElementById("control-bar").style.display = "flex";
+
+      if (user === "rboynton") {
+        const toggleBtn = document.getElementById("admin-toggle-btn");
+        if (toggleBtn) toggleBtn.style.display = "inline-block";
+
+        const adminPanel = document.getElementById("admin-panel");
+        if (adminPanel) adminPanel.style.display = "none"; // hidden by default, shown when toggled
+
+        const adminActions = document.getElementById("admin-actions");
+        if (adminActions) adminActions.style.display = "block";
+
+        updateUserList();
+      }
+    }
+  }
+
+
       document.body.style.overflow = "auto";
       document.getElementById("control-bar").style.display = "flex";
       if (user === "rboynton") {
@@ -814,24 +805,130 @@ function toggleAdminPanel() {
   }
 
   document.addEventListener("DOMContentLoaded", checkLogin);
+
+// Make the admin panel draggable
+(function makeDraggable() {
+  const panel = document.getElementById("admin-panel");
+  let offsetX = 0, offsetY = 0, isDragging = false;
+
+  panel.addEventListener("mousedown", (e) => {
+    if (e.target.tagName === "BUTTON" || e.target.tagName === "UL" || e.target.tagName === "LI") return;
+    isDragging = true;
+    offsetX = e.clientX - panel.offsetLeft;
+    offsetY = e.clientY - panel.offsetTop;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    panel.style.left = (e.clientX - offsetX) + "px";
+    panel.style.top = (e.clientY - offsetY) + "px";
+    panel.style.right = "auto"; // Prevent interference with original fixed positioning
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+})();
+
 </script>
 
 <div id="control-bar" style="position:fixed; top:10px; right:10px; z-index:9999; display:flex; gap:0.5rem; background:white; padding:0.5rem 1rem; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
 <button onclick="toggleDarkMode()" style="padding:0.5rem 1rem; background:var(--primary-green); color:white; border:none; border-radius:5px;">🌙</button>
+
+<button id="admin-toggle-btn" onclick="toggleAdminPanel()" style="display:none; padding:0.5rem 1rem; background:var(--primary-green); color:white; border:none; border-radius:5px;">Admin Panel</button>
 <button onclick="handleLogout()" style="padding:0.5rem 1rem; background:var(--nav-bg); color:white; border:none; border-radius:5px;">Logout</button>
 </div>
 
 <script>
-  function toggleMobileNav() {
-    const nav = document.getElementById('main-nav');
-    nav.style.display = nav.style.display === 'none' ? 'block' : 'none';
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.innerWidth < 768) {
-      document.getElementById('main-nav').style.display = 'none';
-      document.getElementById('mobile-nav-toggle').style.display = 'block';
+  document.addEventListener("DOMContentLoaded", function() {
+    // Ensure latin_users exists in localStorage
+    if (!localStorage.getItem("latin_users")) {
+      localStorage.setItem("latin_users", JSON.stringify({
+        "rboynton": "123456",
+        "student1": "latin123",
+        "student2": "romanisunt"
+      }));
     }
+
+    let USERS = JSON.parse(localStorage.getItem("latin_users"));
+    console.log("Loaded USERS:", USERS);
+
+    function handleLogin() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      const error = document.getElementById("login-error");
+      const remember = document.getElementById("remember-me").checked;
+
+      if (USERS[user] && USERS[user] === pass) {
+        if (remember) {
+          localStorage.setItem("latin_logged_in", user);
+        } else {
+          sessionStorage.setItem("latin_logged_in", user);
+        }
+        document.getElementById("login-screen").style.display = "none";
+        document.body.style.overflow = "auto";
+        document.getElementById("control-bar").style.display = "flex";
+
+        if (user === "rboynton") {
+          const toggleBtn = document.getElementById("admin-toggle-btn");
+          if (toggleBtn) toggleBtn.style.display = "inline-block";
+
+          const adminPanel = document.getElementById("admin-panel");
+          if (adminPanel) adminPanel.style.display = "none";
+
+          const adminActions = document.getElementById("admin-actions");
+          if (adminActions) adminActions.style.display = "block";
+
+          updateUserList();
+        }
+      } else {
+        error.style.display = "block";
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem("latin_logged_in");
+      sessionStorage.removeItem("latin_logged_in");
+      location.reload();
+    }
+
+    function checkLogin() {
+      let user = localStorage.getItem("latin_logged_in") || sessionStorage.getItem("latin_logged_in");
+      if (user && USERS[user]) {
+        document.getElementById("login-screen").style.display = "none";
+        document.body.style.overflow = "auto";
+        document.getElementById("control-bar").style.display = "flex";
+
+        if (user === "rboynton") {
+          const toggleBtn = document.getElementById("admin-toggle-btn");
+          if (toggleBtn) toggleBtn.style.display = "inline-block";
+
+          const adminPanel = document.getElementById("admin-panel");
+          if (adminPanel) adminPanel.style.display = "none";
+
+          const adminActions = document.getElementById("admin-actions");
+          if (adminActions) adminActions.style.display = "block";
+
+          updateUserList();
+        }
+      }
+    }
+
+    function updateUserList() {
+      const list = document.getElementById("user-list");
+      if (!list) return;
+      list.innerHTML = "";
+      Object.keys(USERS).forEach(user => {
+        const li = document.createElement("li");
+        li.textContent = user;
+        list.appendChild(li);
+      });
+    }
+
+    window.handleLogin = handleLogin;
+    window.handleLogout = handleLogout;
+
+    checkLogin();
   });
 </script>
 
